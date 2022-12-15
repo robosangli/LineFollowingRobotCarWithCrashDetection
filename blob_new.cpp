@@ -110,9 +110,9 @@ int main()
 
     Mat img;
 
-    //below value selected with trackbar
-    int hmin = 71, smin = 17, vmin = 24;
-    int hmax = 112, smax = 221, vmax = 255;
+    //below value selected with trackbar - updated with neon orange values
+    int hmin = 152, smin = 82, vmin = 79;
+    int hmax = 179, smax = 255, vmax = 255;
 
 
     // //create trackbar to select values, hue max is 179, saturation and value are 255
