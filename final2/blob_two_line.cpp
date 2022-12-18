@@ -1,3 +1,7 @@
+// This code aims to find two blobs that are detected when an orange-colored object is captured using a camera mounted at the front of the robot car.
+// The two largest blobs will be selected out of many, and these two blobs will represent the horizontal-axis locations of the two lines captured on the screen.
+// These two blob locations will be compared in the redboard code.
+
 #include <stdio.h>
 
 #include <opencv2/opencv.hpp>
@@ -158,8 +162,8 @@ int main()
         Scalar upper(hmax, smax, vmax); //set upper bound
         inRange(frame1_HSV, lower, upper, frame1_threshold);
         blob_detector->detect(frame1_threshold, keypoints1);
-// camera #2
-        frame2_count++;
+// camera #2 
+      //  frame2_count++;
 		// printf("Framecount2 = %d\n");
 //        cap2 >> frame2;
 //        if (frame2.empty())
@@ -182,17 +186,20 @@ int main()
 //        drawKeypoints(frame2,keypoints2,frame2_key,Scalar::all(-1),DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
 #endif
 
+// Finding two blobs
+// An array named keypoints1 has the x and y locations of all of the blobs that are detected.
+// The largest two blobs will be found here.
 
         for (int i=0; i<keypoints1.size(); i++){
-            x = keypoints1[i].pt.x; 
-            y = keypoints1[i].pt.y;
-            size = keypoints1[i].size;
-            x_1 = x;
+            x = keypoints1[i].pt.x; // stores the x coordinate of the point
+            y = keypoints1[i].pt.y; // stores the y coordinate of the point
+            size = keypoints1[i].size; // stores the size of the key point 
+            x_1 = x; // stores the current x value to compare with the previous value
             y_1 = y;
             size_1 = size;                
-            if (size > keypoints1[max_index].size) {
-                second_max_index = max_index;
-                max_index = i;
+            if (size > keypoints1[max_index].size) { // Max_index = 0 at the beginning. If the current blob has a size that is larger than the maximum blob,
+                second_max_index = max_index; // store the index of the previous maximum blob to second_max_index. 
+                max_index = i; // change the maximum index to the current blob index
             }
             printf("keypoints1 %d ,x %.3f, y %.3f, size %f \n",keypoints1.size(),x,y,size);
         }
@@ -224,8 +231,8 @@ int main()
 //
   
         if(keypoints1.size()>0) {
-            to_send.val[0] = keypoints1[max_index].pt.x;
-            to_send.val[1] = keypoints1[second_max_index].pt.x;
+            to_send.val[0] = keypoints1[max_index].pt.x; //send the x-coordinate value of the maximum blob
+            to_send.val[1] = keypoints1[second_max_index].pt.x; // send the x-coordinate value of the second-maximum blob
             sd_write(asterisk);
             sd_write(asterisk);
             sd_writen(to_send.bytes,8);

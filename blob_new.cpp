@@ -181,15 +181,15 @@ int main()
 #endif
 
 
-        for (int i=0; i<keypoints1.size(); i++){
+        for (int i=0; i<keypoints1.size(); i++){ // Store x and y coordinates of the largest blobs
             x = keypoints1[i].pt.x; 
             y = keypoints1[i].pt.y;
             size = keypoints1[i].size;
             x_1 = x;
             y_1 = y;
             size_1 = size;                
-            if (size > keypoints1[max_index].size) {
-                max_index = i;
+            if (size > keypoints1[max_index].size) { // If the current blob has larger size than the size of the previous max_index
+                max_index = i; // Change the max_index to the current index
             }
             printf("keypoints1 %d ,x %.3f, y %.3f, size %f \n",keypoints1.size(),x,y,size);
         }
@@ -220,7 +220,7 @@ int main()
 //        stdistance = 0;
   
         if(keypoints1.size()>0) {
-            to_send.val[0] = keypoints1[max_index].pt.x;
+            to_send.val[0] = keypoints1[max_index].pt.x; // Send the x and y coordinates of the largest blob
             to_send.val[1] = keypoints1[max_index].pt.y;
             sd_write(asterisk);
             sd_write(asterisk);
