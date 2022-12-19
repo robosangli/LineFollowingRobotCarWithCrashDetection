@@ -1,3 +1,7 @@
+// The purpose of this code is to essentially determine the centroids from the largest blobs using the usb camera. 
+// we will then send these values to the redboard, and these values will then tell the wheels to either turn left or right, or continue going straight
+
+
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -94,6 +98,8 @@ int main()
 
     printf("Starting\n");
     VideoCapture cap1(0);
+// the dimensions of the frame were modified here since we wanted a compromise of a large frame, but not to risk slowing down 
+// the processing time too much
     cap1.set(CAP_PROP_FRAME_WIDTH,160);
     cap1.set(CAP_PROP_FRAME_HEIGHT,120);
 
@@ -109,7 +115,7 @@ int main()
 
     Mat img;
 
-    //below value selected with trackbar - updated with neon orange values
+    //below value selected with trackbar - updated with neon orange values that was determined experimentially from trial and error
     int hmin = 152, smin = 82, vmin = 79;
     int hmax = 179, smax = 255, vmax = 255;
 
@@ -238,7 +244,7 @@ int main()
 			}
         }
 
-      
+// we only utilized camera 1, not camera code, Thus, this is all commented out.
 //  camera #2
 //        if(keypoints2.size()>0) {
 //            to_send.val[0] = keypoints2[max_index].pt.x;
