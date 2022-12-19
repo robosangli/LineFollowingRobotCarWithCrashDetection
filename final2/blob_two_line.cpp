@@ -1,6 +1,6 @@
 // This code aims to find two blobs that are detected when an orange-colored object is captured using a camera mounted at the front of the robot car.
 // The two largest blobs will be selected out of many, and these two blobs will represent the horizontal-axis locations of the two lines captured on the screen.
-// These two blob locations will be compared in the redboard code.
+// These two blob locations will be compared in the redboard code. These are sent out and called as cx and cy. 
 
 #include <stdio.h>
 
@@ -100,6 +100,8 @@ int main()
 
     printf("Starting\n");
     VideoCapture cap1(0);
+// we changed the dimensions of the frame. We chose these since it was large enough for our purposes, but not too large where it slowed down the 
+//processing time 
     cap1.set(CAP_PROP_FRAME_WIDTH,160);
     cap1.set(CAP_PROP_FRAME_HEIGHT,120);
 
@@ -113,9 +115,10 @@ int main()
 //    cap2.set(CAP_PROP_FRAME_WIDTH,160);
 //    cap2.set(CAP_PROP_FRAME_HEIGHT,120);
 
+
     Mat img;
 
-    //below value selected with trackbar - updated with neon orange values
+    //below value selected with trackbar - updated with neon orange values that we determined experimentally from trial and error
     int hmin = 152, smin = 82, vmin = 79;
     int hmax = 179, smax = 255, vmax = 255;
 
